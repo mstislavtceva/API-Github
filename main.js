@@ -63,10 +63,13 @@ const searchRepo = async function (inputValue) {
   ).then((response) => {
     if (response.ok) {
       response.json().then((data) => {
+        // Очищаем подсказки(обновляем)
+        autocomplete.innerHTML = "";
         // Получаем данные
         const reposArr = data.items.map((repo) => repo);
 
         if (reposArr === 0) {
+          autocomplete.classList.add("active");
           autocomplete.innerHTML = "<li>No results...</li>";
         } else {
           reposArr.forEach((repo) => {
@@ -85,6 +88,7 @@ const searchRepo = async function (inputValue) {
         }
       });
     } else {
+      autocomplete.classList.add("active");
       autocomplete.innerHTML = "<li>Try again...</li>";
       console.error("Something wrong!");
     }
